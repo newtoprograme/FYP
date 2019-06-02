@@ -1,0 +1,220 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+<script type="text/javascript" src="/qrcode/qrcode.js"></script>
+
+<style>
+	.param {
+		margin-bottom: 7px;
+		line-height: 1.4;
+	}
+	.param-inline dt {
+		display: inline-block;
+	}
+	.param dt {
+		margin: 0;
+		margin-right: 7px;
+		font-weight: 600;
+	}
+	.param-inline dd {
+		vertical-align: baseline;
+		display: inline-block;
+	}
+
+	.param dd {
+		margin: 0;
+		vertical-align: baseline;
+	} 
+
+	.shopping-cart-wrap .price {
+		color: #007bff;
+		font-size: 18px;
+		font-weight: bold;
+		margin-right: 5px;
+		display: block;
+	}
+	var {
+		font-style: normal;
+	}
+
+	.media img {
+		margin-right: 1rem;
+	}
+	.img-sm {
+		width: 90px;
+		max-height: 75px;
+		object-fit: cover;
+	}
+	.rating-checked {
+		color: orange;
+	}
+</style>
+<div class="container">
+
+	<ul class="nav nav-pills">
+		<li class="nav-item">
+			<a class="nav-link" href="/">Home</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link active" href="#">Enrollment</a>
+		</li>
+	</ul>
+	<div class="card">
+		<table class="table table-hover shopping-cart-wrap">
+			<thead class="text-muted">
+				<tr>
+					<th scope="col">Product</th>
+					<th scope="col" width="120">Enroll days</th>
+					<th scope="col" width="120">Ratings</th>
+					<th scope="col" width="200" class="text-right">Enrollment</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<figure class="media">
+							<div class="img-wrap"><img src="/img/{{data[5]}}" class="img-thumbnail img-sm"></div>
+							<figcaption class="media-body">
+								<h6 class="title text-truncate">{{data[2]}}</h6>
+								<dl class="param param-inline small">
+									<dt>Driver ID:</dt>
+									<input hidden="" id="car-id" value="{{data[0]}}">
+									<dd> {{data[1]}}</dd>
+								</dl>
+								<dl class="param param-inline small">
+									<dt>Rules: </dt>
+									<dd>{{data[4]}}</dd>
+								</dl>
+							</figcaption>
+						</figure> 
+					</td>
+					<td> 
+						<select class="form-control" id='enroll-day' onchange="updateEnrollDay()">
+							<option value="1">1 day</option>					
+							<option value="2">2 days</option>	
+							<option value="3">3 days</option>	
+							<option value="4">4 days </option>
+							<option value="5">5 days</option>	
+							<option value="6">6 days </option>
+							<option value="7">7 days </option>
+						</select> 
+					</td>
+					<td> 
+						<div> 
+							{% if rating_amount <= 1 %}
+							<span>N/A</span>
+							{% elif rating_amount  <= 2 %}
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							{% elif rating_amount  <= 3 %}
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							{% elif rating_amount  <= 4 %}
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							{% elif rating_amount  <= 5 %}
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star"></span>
+							{% elif rating_amount  <= 5 %}
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							<span class="fa fa-star rating-checked"></span>
+							{% endif %}
+
+							
+						</div> 
+					</td>
+					<td class="text-right"> 
+
+						{% if not check %}
+						<a id="a" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist" onclick="enroll('{{data[0]}}')"> Enroll <i class="fa fa-heart"></i></a> <span id="b">Enrolled</span>
+						{% else %}
+						<span>Enrolled</span>
+						{% endif %}
+						
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> 
+	{% if not check %}
+	<center><div id="qrcode"></div></center>
+	{% endif %}
+
+</div> 
+
+
+<script type="text/javascript">
+	var a = 1;
+	var b = 1;
+	$('#a').show();
+	$('#b').hide();
+	function enroll(car_id) {
+		var enrollDay = $('#enroll-day').val();
+
+		$.ajax({
+			type: "POST",
+			url: '/enroll',
+			data: {car_id: car_id, enroll_day: enrollDay},
+            // dataType: "html",
+            success: function(data) {
+            	if (data.data == 'success') {
+            		$('#a').hide();
+            		$('#b').show();
+            	}
+            	console.log(data.data);
+            },
+            error: function() {
+            	alert('Error occured');
+            }
+        })
+	}
+
+	function updateEnrollDay() {
+
+		console.log($('#enroll-day').val());
+		a = $('#enroll-day').val(); 
+		b = $('#car-id').val();
+
+		var qrcode = new QRCode(document.getElementById("qrcode"), {
+			text: "/qrcode-apply?car_id="+b+"&enroll_day="+a,
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+		qrcode.clear();
+	}
+
+
+	a = $('#enroll-day').val();
+	b = $('#car-id').val();
+	console.log(a);
+	console.log(b);
+	var qrcode = new QRCode(document.getElementById("qrcode"), {
+		text: "/qrcode-apply?car_id="+b+"&enroll_day="+a,
+		width: 128,
+		height: 128,
+		colorDark : "#000000",
+		colorLight : "#ffffff",
+		correctLevel : QRCode.CorrectLevel.H
+	});
+</script>

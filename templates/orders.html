@@ -1,0 +1,88 @@
+{% include 'layout/mdb_head.html' %}
+
+<link href="css/addons/datatables.min.css" rel="stylesheet">
+
+ <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+<div class="container">
+    <br><br>
+        <table id="faqs" class="display" style="width:100%" data-aos="fade-right" data-aos-duration="3000"> 
+            <thead>
+        <tr>
+            <th class="th-sm"><h5>Order ID</h5>
+            </th>
+            <th class="th-sm"><h5>Image of the Car</h5>
+            </th>
+            <th class="th-sm"><h5>Car Model</h5>
+            </th>
+            <th class="th-sm"><h5>District</h5>
+            </th>
+            <th class="th-sm"><h5>Rules</h5>
+            </th>
+            <th class="th-sm"><h5>Created-date</h5>
+            </th>
+        </tr>
+  </thead>
+  <tbody>
+    {% for i in data%}
+        <tr>        
+            <td>{{i[0]}}</td>
+            <td><a href="/enroll?car_id={{i[0]}}"><img src="img/{{i[5]}}" width="auto" height="100"></a></td>
+            <td>{{i[2]}}</td>
+            <td>{{i[9]}}</td>
+            <td>{{i[4]}}</td>
+            <td>{{i[7]}}</td>
+        </tr>
+    {% endfor %}
+
+  </tbody>
+        </table>
+    </div>
+
+     <br><br>
+      <br><br>
+
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="js/addons/datatables.min.js"></script>
+
+
+
+<script>
+       
+       $(document).ready(function() {
+            $('#faqs').dataTable( {
+                "ordering": false,
+                "columnDefs": [ 
+                    {
+                        targets: [0, 1],
+                        orderable: false
+                    } 
+                ],
+                'info': true,
+                'responsive': true,
+                "scrollX": true,
+                "lengthChange": false,
+                "paging": true,
+                scrollY: '50vh',
+                scrollCollapse: true,
+                language: {
+                    searchPlaceholder: "Filter here"
+                },
+                mark: true,
+            } )
+            // .columns.adjust();
+            
+            $.extend(true, $.fn.dataTable.defaults, {
+                mark: true
+            });
+        } );
+    </script>
+
+<script src="https://cdn.jsdelivr.net/g/mark.js(jquery.mark.min.js),datatables.mark.js"></script>
+<script src="https://cdn.jsdelivr.net/g/mark.js(jquery.mark.min.js)"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.js"></script>
+<link href="https://cdn.jsdelivr.net/datatables.mark.js/2.0.0/datatables.mark.min.css">
+<link href="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.min.css">

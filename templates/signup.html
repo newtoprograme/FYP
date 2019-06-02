@@ -1,0 +1,42 @@
+{% include 'layout/header.html' %}
+
+<body>
+    <div class="container">
+        {% if (msg) %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Opps!</strong> {{ msg }}.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+         {% endif %}
+        <form class="form-signin" action="/signup" method="POST">
+            <center><a href="/"><img class="mb-4" src="img/logo_transparent.png" alt="" width="300" height="300"></a></center>
+            <center><h1 class="h3 mb-3 font-weight-normal">Please Signup</h1></center>
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="pass" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" name="repass" placeholder="Confirm Password">
+            </div>
+            <label class="radio-inline"><input type="radio" name="gender" value="male" checked>Male</label>
+            <label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+            <br>
+            <hr>
+            <button type="submit" class="btn btn-primary">Submit</button><br><br>
+            <p style="color: grey;">OR</p>
+            Already have an account? <a href="login">Login here</a>
+
+            {% include 'layout/footer.html' %}
+        </form>
+    </div>  
+</body>
+
+

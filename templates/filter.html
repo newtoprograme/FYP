@@ -1,0 +1,149 @@
+{% include 'layout/mdb_head.html' %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<body>
+	<br><br>
+	<div class="container">
+		<!-- Card -->
+		<div class="card" id="step">
+			<!-- Card content -->
+			<div class="card-body">
+				<!-- Text -->
+				<p class="card-text">
+					<h3><b>Step One:</b> Pick Up location </h3>
+					<br> 
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:33%">
+							
+						</div>
+					</div>
+					<br>
+					<br>
+					<!-- Basic dropdown -->
+					<button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false" id="district-text">Select District</button>
+					<input type="hidden" id="district-id" name='district_id' value="">
+
+					<div class="dropdown-menu">
+						{% for i in data %}
+						<a class="dropdown-item district-selected" data-text="{{ i[1] }}">{{ i[1] }}</a>
+						{% endfor %}
+					</div>
+					<br><label></label>
+					<input style="display: inline-block;" class="form-control" type="text" placeholder="Please input the details of pick up location">
+				</p>
+				<!-- Button -->
+				<a id="tr1-next" class="btn btn-primary">Next Page</a>
+			</div>
+		</div>
+
+		<!-- Step 2 -->
+		<div class="card" id="step2" style="display: none;">
+			<!-- Card content -->
+			<div class="card-body">
+
+				<p class="card-text">
+					
+					<h3><b>Step Two :</b> Preferred Capacity   </h3>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:66%">
+							
+						</div>
+					</div>
+
+
+					<br>
+					<!-- Basic dropdown -->
+					<div class="form-group">
+								<label>Select your prefered Car Capacity</label>
+								<select multiple class="form-control" id="car-capacity" name="car_capacity">
+									<option selected>1</option>
+									<option>5</option>
+									<option>8</option>
+								</select>
+							</div>
+
+					
+				</p>
+				<!-- Button -->
+				<a class="btn btn-primary" id="tr2-back">Go back</a> <a id="tr2-next" class="btn btn-primary">Next Page</a>
+
+			</div>
+		</div>
+
+		<!-- Step 3 -->
+		<div class="card" id="step3" style="display: none;">
+			<!-- Card content -->
+			<div class="card-body">
+
+				<p class="card-text">
+					
+					<h3><b>Step Three:</b>Preferred Car Model </h3>
+					<div class="progress">
+						<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+							
+						</div>
+					</div>
+					<br>
+					<!-- Basic dropdown -->
+					<button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false" id="district-text">Select Car Model </button>
+					<input type="hidden" id="district-id" name='district_id' value="">
+
+					<div class="dropdown-menu">
+						{% for i in data %}
+							<a class="dropdown-item district-selected" data-text="{{ i[1] }}">{{ i[1] }}</a>
+						{% endfor %}
+					</div>
+				</p>
+				<!-- Button -->
+				<a class="btn btn-primary" id="tr3-back">Go back</a> <a id="tr3_next" class="btn btn-primary">Submit</a>
+
+			</div>
+		</div>
+		
+	</div>
+
+
+	<div style="height: 300px;"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+
+			$('#tr1-next').click( function() {
+				$('#step2').css('display','block'); 
+				$('#step').css('display','none'); 
+			})
+
+			$('#tr2-back').click( function() {
+				$('#step2').css('display','none'); 
+				$('#step').css('display','block'); 
+			})
+
+			$('#tr2-next').click(function(){
+				$('#step2').css('display','none'); 
+				$('#step3').css('display','block'); 
+			})
+
+			$('#tr3-back').click(function(){
+				$('#step2').css('display','block'); 
+				$('#step3').css('display','none'); 
+			})
+
+
+			$(".district-selected").click( function(){
+				var district_txt = $(this).attr("data-text");
+				$("#district-text").text(district_txt+' ');
+
+				var district_id = $(this).attr("data-id");
+				$("#district-id").val(district_id);
+			})
+		});
+	</script>
+</body>
+

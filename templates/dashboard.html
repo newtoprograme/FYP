@@ -1,0 +1,131 @@
+{% include("layout/dashboard_head.html") %}
+	<style>
+		.checked {
+		  color: orange;
+		}
+	</style>
+	<main class="main">
+       <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Welcome! <strong>{{ session.email }}</strong>.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% if session.user_role == 0 %}
+	        <div class="container-fluid">
+	        	<table class="table table-hover">
+				  <thead>
+				    <tr>
+						<th scope="col">Order No. (Desc)</th>
+						<th scope="col">Passenger</th>
+						<th scope="col">Status</th>
+						<th scope="col">Enroll Date</th>
+						<th scope="col">Rating</th>
+						<th scope="col"></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for i in data %}
+				    <tr>
+				      	<th scope="row">{{i[0]}}</th>
+					    <td>{{i[9]}}</td>
+						<td>
+							{% if i[8] == 1 %}
+								<span>In Process</span>
+							{% elif  i[8] == 2 %}
+								<span>Rejected</span>
+							{% else %}
+								<span>Finished</span>
+							{% endif %}
+
+						</td>
+
+						<td>{{i[6]}}</td>
+						<td>
+							{% if i[7] == 0 %}
+								<span>N/A</span>
+							{% elif i[7] == 1 %}
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							{% elif i[7] == 2 %}
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							{% elif i[7] == 3 %}
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+								<span class="fa fa-star"></span>
+							{% elif i[7] == 4 %}
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star"></span>
+							{% elif i[7] == 5 %}
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+								<span class="fa fa-star checked"></span>
+							{% endif %}
+
+								
+
+
+						</td>
+						<td>
+							{% if session.user_id == i[1] and i[8] == 1 %}
+								<a href="/process-request?order=0&i={{i[0]}}" class="btn btn-success" role="button">Accept</a>
+								<a href="/process-request?order=2&i={{i[0]}}" class="btn btn-danger" role="button">Declne</a>
+							{% elif session.user_id != i[1] and i[8] == 0 %}
+								<a href="/rating?r_id={{i[0]}}&d_id={{i[1]}}" class="btn btn-info" role="button">View</a>
+							{% endif %}
+						</td>
+				    </tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+	        </div>
+	    {% else %}
+	    	<div class="container-fluid">
+	        	<table class="table table-hover">
+				  <thead>
+				    <tr>
+						<th scope="col">Post No. (DESC)</th>
+						<th scope="col">Plate Num</th>
+						<th scope="col">Car Model</th>
+						<th scope="col">Car Capacity</th>
+						<th scope="col">Created AT</th>
+						<th></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for i in data %}
+				    <tr>
+				      	<th scope="row">{{i[0]}}</th>
+					    <td>{{i[1]}}</td>
+						<td>{{i[2]}}</td>
+
+						<td>{{i[3]}}</td>
+						<td>{{i[6]}}</td>
+						<td>
+							<a href="/del-record?i={{i[0]}}" class="btn btn-danger" role="button">Delete</a>
+						</td>
+				    </tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+	        </div>
+
+	    {% endif %}
+
+	</main>
+
+{% include("layout/dashboard_foot.html") %}

@@ -1,0 +1,116 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Car 2 Go</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="MDB/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="MDB/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="MDB/css/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<!--Main Navigation-->
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <div class="container">
+
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="/"><b>Car 2 Go</b></a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto smooth-scroll">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+<!--                 <li class="nav-item">
+                    <a class="nav-link" href="/filter">Get a Ride</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/driverfilter">Become a driver</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/stepdriver">How to use</a>
+                </li>
+
+            </ul>
+
+            <!-- Links -->
+            {% if session.logged_in %}
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Sign Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a  href="/dashboard"><button  class="btn btn-outline-info  waves-effect btn-sm">{{ session.email }}</button></a>
+                    </li>
+                </ul>
+            {% else %}
+                <!-- Social Icon  -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Sign Up</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+        <!-- Collapsible content -->
+
+    </div>
+
+</nav>
+<!--/.Navbar-->
+
+<!--Mask-->
+<div id="intro" class="view">
+
+    <div class="mask rgba-black-strong">
+
+        <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+
+            <div class="row d-flex justify-content-center text-center">
+
+                <div class="col-md-10">
+
+                    <!-- Heading -->
+                    <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Sharing is the gentle art of caring</h2>
+
+                    <!-- Divider -->
+                    <hr class="hr-light">
+
+                    <!-- Description -->
+                    <h4 class="white-text my-4">We hope the idea of sharing could start from one another 
+                    </h4>
+                    <button type="button" class="btn btn-outline-white">Read more<i class="fa fa-book ml-2"></i></button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    <!--/.Mask-->
