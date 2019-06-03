@@ -24,7 +24,7 @@ mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 #app.config['MYSQL_DATABASE_PORT'] = '3306'
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = 'city88'
 app.config['MYSQL_DATABASE_DB'] = 'car_to_go'
 #app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER # file upload
@@ -37,7 +37,7 @@ def index():
     if request.method == 'GET':
         cur = mysql.get_db().cursor()
 
-        result = cur.execute("SELECT drivers.car_pictures FROM drivers INNER JOIN record ON record.driver_id = drivers.id GROUP BY drivers.car_pictures HAVING AVG(rating) >= 4 ORDER BY record.created_at DESC LIMIT 3")
+        result = cur.execute("SELECT drivers.car_pictures FROM drivers INNER JOIN record ON record.driver_id = drivers.id ORDER BY record.created_at DESC LIMIT 3")
 
 
         data = cur.fetchall()
@@ -540,7 +540,7 @@ def orders():
 
 if __name__ == '__main__':
     app.secret_key='car_to_go'
-    app.run(debug = True)
+    app.run("0.0.0.0", debug = True)
 
 
 
